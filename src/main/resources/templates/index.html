@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Car rent</title>
+</head>
+<body>
+
+    <h1>Car rent</h1>
+    <h2>Search for available cars</h2>
+
+    <form action="/cars" method="post">
+        <label for="startDate">Start date:</label>
+        <input type="date" id="startDate" name="startDate">
+        <br><br>
+
+        <label for="endDate">End date:</label>
+        <input type="date" id="endDate" name="endDate">
+        <br><br>
+
+        <button type="submit">Search for available cars</button>
+    </form>
+
+    <div th:if="${freeCarsDTO != null}">
+        <h2>Available cars</h2>
+
+        <p th:if="${freeCarsDTO.freeCars.isEmpty()}">
+            No cars in this term
+        </p>
+
+        <label for="carId">Select car:</label>
+        <select id="carId" name="carId"
+                th:if="${!freeCarsDTO.freeCars.isEmpty()}">
+            <option value="">Select car</option>
+            <option th:each="car : ${freeCarsDTO.freeCars}"
+                    th:value="${car.id}"
+                    th:text="${car.type + ' - ' + car.price + ' Ft/day'}">
+            </option>
+        </select>
+    </div>
+
+</body>
+</html>
