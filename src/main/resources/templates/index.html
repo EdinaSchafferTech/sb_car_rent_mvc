@@ -21,23 +21,38 @@
         <button type="submit">Search for available cars</button>
     </form>
 
-    <div th:if="${freeCarsDTO != null}">
-        <h2>Available cars</h2>
+	<div th:if="${freeCarsDTO != null}">
+	       <h2>Available cars</h2>
 
-        <p th:if="${freeCarsDTO.freeCars.isEmpty()}">
-            No cars in this term
-        </p>
+	       <p th:if="${freeCarsDTO.freeCars.isEmpty()}">
+	           No cars in this term
+	       </p>
 
-        <label for="carId">Select car:</label>
-        <select id="carId" name="carId"
-                th:if="${!freeCarsDTO.freeCars.isEmpty()}">
-            <option value="">Select car</option>
-            <option th:each="car : ${freeCarsDTO.freeCars}"
-                    th:value="${car.id}"
-                    th:text="${car.type + ' - ' + car.price + ' Ft/day'}">
-            </option>
-        </select>
-    </div>
+	       <form action="/cars/res/start" method="get"
+	             th:if="${!freeCarsDTO.freeCars.isEmpty()}">
+
+	           <label for="carId">Select car:</label>
+
+	           <select id="carId" name="carId">
+	               <option value="">Select car</option>
+
+	               <option th:each="car : ${freeCarsDTO.freeCars}"
+	                       th:value="${car.id}"
+	                       th:text="${car.type + ' - ' + car.price + ' Ft/nap'}">
+	               </option>
+	           </select>
+
+	           <input type="hidden" name="startDate"
+	                  th:value="${freeCarsDTO.resDateDTO.startDate}">
+
+	           <input type="hidden" name="endDate"
+	                  th:value="${freeCarsDTO.resDateDTO.endDate}">
+
+	           <br><br>
+	           <button type="submit">Continue reservation</button>
+
+	       </form>
+	   </div>
 
 </body>
 </html>

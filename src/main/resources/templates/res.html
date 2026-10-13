@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation</title>
+</head>
+<body>
+
+    <h1>Car reservation</h1>
+
+    <h2>Reservation  time period</h2>
+
+    <p>
+        Start date:
+        <span th:text="${userSelectionDTO.resDateDTO.startDate}"></span>
+    </p>
+
+    <p>
+        End date:
+        <span th:text="${userSelectionDTO.resDateDTO.endDate}"></span>
+    </p>
+
+    <h2>Personal information</h2>
+
+    <form action="/cars/res/finish" method="post">
+
+        <input type="hidden" name="carId"
+               th:value="${userSelectionDTO.carId}">
+
+        <input type="hidden" name="startDate"
+               th:value="${userSelectionDTO.resDateDTO.startDate}">
+
+        <input type="hidden" name="endDate"
+               th:value="${userSelectionDTO.resDateDTO.endDate}">
+
+			   Name: <input type="text" name="name">
+			   <br><br>
+
+			   E-mail:<input type="email" name="email">
+			   <br><br>
+
+			   Address:<input type="text" name="address">
+			   <br><br>
+
+			   Phone number:<input type="text" name="phone">
+			   <br><br>
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+</body>
+</html>
