@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pti.car_rent_mvc.dto.FreeCarsDTO;
 import pti.car_rent_mvc.dto.ResDateDTO;
 import pti.car_rent_mvc.dto.SimpleResponseDTO;
+import pti.car_rent_mvc.dto.UserResDTO;
 import pti.car_rent_mvc.dto.UserSelectionDTO;
 import pti.car_rent_mvc.model.Reservation;
 import pti.car_rent_mvc.service.CarService;
@@ -34,15 +35,11 @@ public class AppController {
 	}
 
 	@PostMapping("/cars")
-	public String getAvailableCars(@RequestParam("startDate") LocalDate startDate,
-			@RequestParam("endDate") LocalDate endDate, Model model) {
-
-		ResDateDTO resDateDTO = new ResDateDTO(startDate, endDate);
+	public String getAvailableCars(ResDateDTO resDateDTO, Model model) {
 
 		FreeCarsDTO freeCarsDTO = carService.getAvailableCars(resDateDTO);
 
 		model.addAttribute("freeCarsDTO", freeCarsDTO);
-
 		return "index";
 	}
 
@@ -62,20 +59,20 @@ public class AppController {
 	}
 
 	@PostMapping("/cars/res/finish")
-	public String finishReservation(@RequestParam("carId") int carId, @RequestParam("startDate") LocalDate startDate,
-			@RequestParam("endDate") LocalDate endDate, @RequestParam("name") String name,
-			@RequestParam("email") String email, @RequestParam("address") String address,
-			@RequestParam("phone") String phone, Model model) {
+	public String finishReservation(UserResDTO userResDTO, Model model) {
 
 		Reservation reservation = new Reservation();
 
-		reservation.setCarId(carId);
-		reservation.setStartDate(startDate);
-		reservation.setEndDate(endDate);
-		reservation.setName(name);
-		reservation.setEmail(email);
-		reservation.setAddress(address);
-		reservation.setPhone(phone);
+		reservation.setName(userResDTO.getName());
+		reservation.setEmail(userResDTO.getEmail());
+		reservation.setAddress(userResDTO.getAddress());
+		reservation.setPhone(userResDTO.getPhone());
+
+		UserSelectionDTO userSelectionDTO = userResDTO.getUserSelectionDTO();
+
+		reservation.setCarId(userSelectionDTO.getCarId());
+		reservation.setStartDate(userSelectionDTO.getResDateDTO().getStartDate());
+		reservation.setEndDate(userSelectionDTO.getResDateDTO().getEndDate());
 
 		reservationService.createReservation(reservation);
 
@@ -85,6 +82,7 @@ public class AppController {
 		model.addAttribute("simpleResponseDTO", simpleResponseDTO);
 
 		return "result";
+
 	}
 
 }

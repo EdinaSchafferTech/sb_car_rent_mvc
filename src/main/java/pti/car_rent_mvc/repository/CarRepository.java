@@ -9,7 +9,7 @@ import pti.car_rent_mvc.model.Car;
 
 public interface CarRepository extends CrudRepository<Car, Integer> {
 
-	@Query("SELECT * FROM car WHERE active=true")
-	List<Car> findAllActiveCars();
+	@Query("SELECT * FROM car WHERE active = true")
+	List<Car> findActiveCars();
 
 }

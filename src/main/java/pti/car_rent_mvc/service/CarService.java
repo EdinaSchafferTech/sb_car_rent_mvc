@@ -36,18 +36,9 @@ public class CarService {
 
 		return cars;
 	}
-
+	
 	public List<Car> getActiveCars() {
-		List<Car> allCars = getAllCars();
-		List<Car> activeCars = new ArrayList<>();
-
-		for (Car car : allCars) {
-			if (car.isActive()) {
-				activeCars.add(car);
-			}
-		}
-
-		return activeCars;
+	    return carRepository.findActiveCars();
 	}
 	public FreeCarsDTO getAvailableCars(ResDateDTO resDateDTO) {
         LocalDate startDate = resDateDTO.getStartDate();

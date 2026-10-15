@@ -24,14 +24,14 @@
 
     <form action="/cars/res/finish" method="post">
 
-        <input type="hidden" name="carId"
-               th:value="${userSelectionDTO.carId}">
+		<input type="hidden" name="userSelectionDTO.carId"
+		       th:value="${userSelectionDTO.carId}">
 
-        <input type="hidden" name="startDate"
-               th:value="${userSelectionDTO.resDateDTO.startDate}">
+		<input type="hidden" name="userSelectionDTO.resDateDTO.startDate"
+		       th:value="${userSelectionDTO.resDateDTO.startDate}">
 
-        <input type="hidden" name="endDate"
-               th:value="${userSelectionDTO.resDateDTO.endDate}">
+		<input type="hidden" name="userSelectionDTO.resDateDTO.endDate"
+		       th:value="${userSelectionDTO.resDateDTO.endDate}">
 
 			   Name: <input type="text" name="name">
 			   <br><br>
