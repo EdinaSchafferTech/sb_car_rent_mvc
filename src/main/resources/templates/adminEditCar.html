@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="hu" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit car</title>
+</head>
+<body>
+
+<h1>Edit car</h1>
+
+<form action="/admin/car/edit/finish" method="post">
+
+	<input type="hidden" name="apiKey" th:value="${apiKey}">
+	<input type="hidden" name="id" th:value="${selectedCar.id}">
+
+	<input type="text" name="type"
+	       th:value="${selectedCar.type}" required>
+
+	<input type="number" name="price"
+	       th:value="${selectedCar.price}" required>
+
+	<input type="checkbox" name="active"
+	       th:checked="${selectedCar.active}">
+
+    <button type="submit">Save</button>
+
+</form>
+
+</body>
+</html>

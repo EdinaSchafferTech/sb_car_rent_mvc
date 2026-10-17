@@ -4,15 +4,16 @@ public class ReservationDTO {
 
 	private int id;
 	private UserResDTO userResDTO;
+	private int price;
 
 	public ReservationDTO() {
 		super();
 	}
-
-	public ReservationDTO(int id, UserResDTO userResDTO) {
+	public ReservationDTO(int id, UserResDTO userResDTO, int price) {
 		super();
 		this.id = id;
 		this.userResDTO = userResDTO;
+		this.price = price;
 	}
 
 	public int getId() {
@@ -31,4 +32,13 @@ public class ReservationDTO {
 		this.userResDTO = userResDTO;
 	}
 
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	
 }

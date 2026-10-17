@@ -29,11 +29,6 @@ public class AppController {
 		this.reservationService = reservationService;
 	}
 
-	@GetMapping("/")
-	public String index() {
-		return "index";
-	}
-
 	@PostMapping("/cars")
 	public String getAvailableCars(ResDateDTO resDateDTO, Model model) {
 
@@ -74,7 +69,9 @@ public class AppController {
 		reservation.setStartDate(userSelectionDTO.getResDateDTO().getStartDate());
 		reservation.setEndDate(userSelectionDTO.getResDateDTO().getEndDate());
 
-		reservationService.createReservation(reservation);
+		Reservation savedReservation = reservationService.createReservation(reservation);
+
+		model.addAttribute("totalPrice", savedReservation.getPrice());
 
 		SimpleResponseDTO simpleResponseDTO = new SimpleResponseDTO();
 		simpleResponseDTO.setResponse("Reservation successful!");

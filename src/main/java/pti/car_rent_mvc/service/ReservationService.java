@@ -5,6 +5,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import pti.car_rent_mvc.dto.ResDateDTO;
+import pti.car_rent_mvc.dto.ReservationDTO;
+import pti.car_rent_mvc.dto.UserResDTO;
+import pti.car_rent_mvc.dto.UserSelectionDTO;
 import pti.car_rent_mvc.model.Car;
 import pti.car_rent_mvc.model.Reservation;
 import pti.car_rent_mvc.repository.CarRepository;
@@ -30,6 +34,27 @@ public class ReservationService {
 		}
 
 		return reservations;
+	}
+
+	public List<ReservationDTO> getAllReservationsDTO() {
+
+		List<ReservationDTO> reservationDTOList = new ArrayList<>();
+
+		for (Reservation reservation : getAllReservations()) {
+
+			ResDateDTO resDateDTO = new ResDateDTO(reservation.getStartDate(), reservation.getEndDate());
+
+			UserSelectionDTO userSelectionDTO = new UserSelectionDTO(reservation.getCarId(), resDateDTO);
+
+			UserResDTO userResDTO = new UserResDTO(reservation.getName(), reservation.getEmail(),
+					reservation.getAddress(), reservation.getPhone(), userSelectionDTO);
+
+			ReservationDTO reservationDTO = new ReservationDTO(reservation.getId(), userResDTO, reservation.getPrice());
+
+			reservationDTOList.add(reservationDTO);
+		}
+
+		return reservationDTOList;
 	}
 
 	public Reservation createReservation(Reservation reservation) {

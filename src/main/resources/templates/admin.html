@@ -2,18 +2,81 @@
 <html lang="hu" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Admin login</title>
+    <title>Admin page</title>
 </head>
 <body>
 
-    <h1>Admin login</h1>
+    <h1>Admin page</h1>
 
-    <form action="/admin" method="get">
-        <p>API-key:</p>
-        <input type="password" name="apiKey">
-        <br><br>
-        <button type="submit">Enter</button>
-    </form>
+    <h2>Reservations</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Reservation ID</th>
+                <th>Name</th>
+                <th>E-mail</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Car ID</th>
+                <th>Start date</th>
+                <th>End date</th>
+				<th>Total price (Ft)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="reservation : ${adminPageDTO.allReservation}">
+                <td th:text="${reservation.id}"></td>
+                <td th:text="${reservation.userResDTO.name}"></td>
+                <td th:text="${reservation.userResDTO.email}"></td>
+                <td th:text="${reservation.userResDTO.address}"></td>
+                <td th:text="${reservation.userResDTO.phone}"></td>
+                <td th:text="${reservation.userResDTO.userSelectionDTO.carId}"></td>
+                <td th:text="${reservation.userResDTO.userSelectionDTO.resDateDTO.startDate}"></td>
+                <td th:text="${reservation.userResDTO.userSelectionDTO.resDateDTO.endDate}"></td>
+				<td th:text="${reservation.price}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Cars</h2>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Car ID</th>
+                <th>Type</th>
+                <th>Daily price</th>
+                <th>Active</th>
+                <th>Edit</th>
+                <th>Deactivate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="car : ${adminPageDTO.allCar}">
+                <td th:text="${car.id}"></td>
+                <td th:text="${car.type}"></td>
+                <td th:text="${car.price}"></td>
+                <td th:text="${car.active}"></td>
+                <td>
+                    <a th:href="@{/admin/cars/{id}/edit(id=${car.id}, apiKey=${param.apiKey})}">
+                        Edit
+                    </a>
+                </td>
+                <td>
+                    <form th:action="@{/admin/cars/{id}/deactivate(id=${car.id})}"
+                          method="post">
+                        <input type="hidden" name="apiKey" th:value="${param.apiKey}">
+                        <button type="submit" th:if="${car.active}">
+                            Deactivate
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p th:text="${adminPageDTO.response}"></p>
 
 </body>
 </html>
